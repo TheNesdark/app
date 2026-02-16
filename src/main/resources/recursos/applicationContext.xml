@@ -1,0 +1,1010 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+        xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd"
+        default-lazy-init="true"
+>
+    
+      
+    
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="/recursos/jdbc.properties" />
+
+    <!-- Data Source -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          p:driverClassName="${jdbc.driverClassName}"
+          p:url="${jdbc.url}"
+          p:username="${jdbc.username}"
+          p:password="${jdbc.password}"
+  
+
+    />
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+    <!-- Gestión de transacciones -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+        
+    </bean>
+    
+ 
+    <bean class="com.genoma.plus.dao.impl.enfermeria.AgendaProcedimientosDAOImpl" id="agendaProcedimientosDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    
+    <bean class="com.genoma.plus.dao.impl.integracion_simedis.IntegracionExternaDAOImpl" id="integracionExternaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+     <bean class="com.genoma.plus.dao.impl.integracion_simedis.IntegracionExternaBienestarDAOImpl" id="integracionExternaBienestarDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+
+
+    <bean class="com.genoma.plus.dao.impl.historia.Orden_UnidosisDAOImpl" id="orden_UnidosisDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.Orden_Unidosis_DetalleDAOImpl" id="orden_Unidosis_DetalleDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.Orden_Unidosis_Detalle_DilucionDAOImpl" id="orden_Unidosis_Detalle_DilucionDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.LiquidacionOrdenesServiciosDAOImpl" id="liquidacionOrdenesServiciosDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.Orden_Unidosis_Detalle_SuspensionDAOImpl" id="orden_Unidosis_Detalle_SuspensionDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.general.UsuarioSistemaDAOImpl" id="usuarioSistemaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.SalidaInventarioParaFacturacionDAOImpl" id="salidaInventarioParaFacturacionDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+
+    <bean class="com.genoma.plus.dao.impl.historia.EspecialidadProfesionalDAOImpl" id="especialidadProfesionalDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.InformacionVariaUrgenciasHospitalizacionDAOImpl" id="informacionVariaUrgenciasHospitalizacionDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.InformacionAtencionAnexo2DAOImpl" id="informacionAtencionAnexo2DAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.ResultadoAyudasDiagnosticasDAOImpl" id="resultadoAyudasDiagnosticasDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+
+    <bean class="com.genoma.plus.dao.impl.general.InformacionProfesionalDAOImpl" id="informacionProfesionalDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean  class="com.genoma.plus.dao.impl.rrhh.GestionConceptoPersonaDAOImpl" id="gestionConceptoPersonaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean  class="com.genoma.plus.dao.impl.rrhh.ImplementacionReporteRecursoHumanoDAOImpl" id="implementacionReporteRecursoHumanoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean  class="com.genoma.plus.dao.impl.presupuesto.InformesCgrDAOImpl" id="informesCgrDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean  class="com.genoma.plus.dao.impl.enfermeria.AplicacionTratamientoDAOImpl" id="aplicacionTratamientoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.InformacionIpsDAOImpl" id="informacionIpsDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.inventario.ConsolidadoCierreContableDAOImpl" id="consolidadoCierreContableDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.contabilidad.InformesVariosContabilidadDAOImpl" id="informesVariosContabilidadDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.laboratorio.ImplementacionReportesDAOImpl" id="implementacionReportesDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.LiquidacionCirugiaDAOImpl" id="liquidacionCirugiaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.AntecedenteFamiliarTextoDAOImpl" id="antecedenteFamiliarTextoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.DetalleRevisionSistemasDAOImpl" id="detalleRevisionSitemasDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.ExamenFisicoDAOImpl" id="examenFisicoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.DetalleExamenFisicoDAOImpl" id="detalleExamenFisicoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.general.PatologiaCie10DAOImpl" id="patologiaCie10DAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    
+    <bean class="com.genoma.plus.dao.impl.historia.HNotaClinicaDAOImpl" id="hNotaClinicaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.HNotaClinicaDiagnosticoDAOImpl" id="hNotaClinicaDiagnosticoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>     
+ 
+    <bean class="com.genoma.plus.dao.impl.historia.HOrdenInterconsultaDAOImpl" id="hOrdenInterconsultaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.HSignosVitalesDAOImpl" id="hSignosVitalesDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.laboratorio.ResultadoInterfazDAOImpl" id="resultadosInterfazDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.sig.ConsultaPeriodoDuracionTratamientoDAOImpl" id="consultarPeriodoDuracionTratamientoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.sig.InformeTratamientoOdontologicoDAOImpl" id="informeTratamientoOdontologicoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.sig.ConsultarInformacionCronicosDAOImpl" id="consultarInformacionCronicosDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.sig.ReporteExamenOcupacionalDAOImpl" id="ReporteExamenOcupacionalDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+        
+    <bean class="com.genoma.plus.dao.impl.sig.GeneracionRipsMinisterioDAOImpl" id="generacionRipsMinisterioDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    
+    <bean class="com.genoma.plus.dao.impl.gcuenta.GCuentaDAOImpl" id="gCuentaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.RevisionSistemasDAOImpl" id="revisionSistemasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.AntecedentesPatologicosPersonalesDAOImpl" id="antecedentesPatologicosPesonalesDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.pyp.TomaMuestraCitologiaDAOImpl" id="tomaMuestraCitologiaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.pyp.ItemProcedimientoSeguimientoDAOImpl" id="itemProcedimientoSeguimientoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.pyp.GestionExamenesPyPDAOImpl" id="gestionExamenesPyPDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.pyp.TipoSeguimientoCDAOImpl" id="tipoSeguimientoCDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.gcuenta.GCGeneracionCircular030DAOImpl" id="gCGeneracionCircular030DAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.presupuesto.PresupuestoDAOImpl" id="presupuestoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.presupuesto.EjecucionPresupuestalDAOImpl" id="ejecucionPresupuestalDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.contabilidad.ContabilidadDAOImpl" id="contabilidadDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.laboratorio.LaboratorioDAOImpl" id="laboratorioDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.laboratorio.LaboratorioBienestarDAOImpl" id="laboratorioBienestarDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.HistoriaDAOImpl" id="historiaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.FacturacionDAOImp" id="facturacionDAOImp">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoConAccionDAOImpl" id="tipoConAccionDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.Generico3Text1CheckDAOImpl" id="generico3Text1Check">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.genoma.plus.dao.impl.general.TipoEventoSCDAOImpl" id="tipoEventoSCDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.Generico1Text1CheckDAOImpl" id="generico1Text1Check">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.SC_TProcesoTRiesgoDAOImpl" id="sCTProcesoTRiesgoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.SC_TEventoTConAccDAOImpl" id="sCTEventoTConAccDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.SC_TRiesgoTEventoDAOImpl" id="sCTRiesgoTEventoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.genoma.plus.dao.impl.general.General1Text1Spinner1CheckDAOImpl" id="general1Text1Spinner1CheckDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.SC_EventoAdversoDAOImpl" id="sCEventoAdversoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>    
+    
+    <bean class="com.genoma.plus.dao.impl.general.General1Text2Spinner1CheckDAOImpl" id="general1Text2Spinner1CheckDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.K_FormaPagoDAOImpl" id="kFormaPagoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>  
+      
+    <bean class="com.genoma.plus.dao.impl.sgc.InformesSgcDAOImpl" id="informesSgcDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.SC_EventoAdversoAnalisisDAOImpl" id="sCEventoAdversoAnalisisDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+       
+    <bean class="com.genoma.plus.dao.impl.sgc.SC_EventoAdversoGestionDAOImpl" id="sCEventoAdversoGestion">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.SC_ClasificacionEventoDAOImpl" id="sCClasificacionEventoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>  
+    
+    <bean class="com.genoma.plus.dao.impl.general.PP_RubrosEncabezadoDAOImpl" id="pPRubrosEncabezadoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.InformesFacturadosDAOImpl" id="informesFacturadosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoDocumentoFirmaDAOImpl" id="tipoDocumentoFirmaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.BuscarConceptoNominaxVFijoDAOImpl" id="buscarConceptoNominaxVFijoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.SGC_ActasDAOImpl" id="sGCActasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.SGC_RegistroReunionesDAOImpl" id="sGCRegistroReunionesDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.rrhh.GeneralDAOImpl" id="generalDAO1">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.imagenesdx.InformeLecturaUsuariosDAOImpl" id="informeLecturaUsuariosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoTuboDAOImpl" id="tipoTuboDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.IngresoDocumentoDAOImpl" id="ingresoDocumentoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoDocumentoSoporteDAOImpl" id="tipoDocumentoSoporteDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoDocumentoFiltroSoporteDAOImpl" id="tipoDocumentoFiltroSoporteDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.comprabs.ConsolidadoContratosDAOImpl" id="consolidadoContratosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.RutaSoporteDAOImpl" id="rutaSoporteDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.SGC_InformeSesionesXTrabajadorDAOImpl" id="sGCInformeSesionesXTrabajadorDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.genoma.plus.dao.impl.comprabs.AdicionContratoDAOImpl" id="adicionContratoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.comprabs.CierreOrdenDAOImpl" id="cierreOrdenDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.inventario.InformeEntradasDAOImpl" id="informeEntradasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.RHTipoCargoDAOImpl" id="rHTipoCargoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.rrhh.ConsolidadoConceptosDAOImpl" id="consolidadoConceptosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.contabilidad.InformesContabilidadDAOImpl" id="informesContabilidadDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.Resolucion2463_DAOImpl" id="resolucion2463DAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.citas.InformesCitasDAOImpl" id="informesCitasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.IngresoSeguimientosDAOImpl" id="ingresoSeguimientosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.SO_TipoResultadoDAOImpl" id="sOTipoResultadoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.ConsultarNovedadDAOImpl" id="consultarNovedadDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.Resolucion4725_DAOImpl" id="resolucion4725_DAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.Resolucion1604_DAOImpl" id="resolucion1604_DAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.salud_ocupacional.InformeSaludOcupacionalDAOImpl" id="informeSaludOcupacionalDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.ActividadEconomicaDAOImpl" id="ActividadEconomicaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.salud_ocupacional.RevisionExamenSoDAOImpl" id="revisionExamenSoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.salud_ocupacional.CertificadoSoDAOImpl" id="certificadoSoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.caja.AsignacionReciboIngresosDAOImpl" id="asignacionReciboIngresosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.SGC_Informes_Consolidado_EventosDAOImpl" id="sGCInformesConsolidadoEventosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+     
+    <bean class="com.genoma.plus.dao.impl.sig.CensoHospitalizacionDAOImpl" id="censoHospitalizacionDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoClasificacionResiduosDAOImpl" id="tipoClasificacionResiduosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.RegistroDisposicionResiduosDAOImpl" id="registroDisposicionResiduosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.caja.ReciboEgresosDAOImpl" id="reciboEgresosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.caja.ReciboIngresoDAOImpl" id="reciboIngresoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.rrhh.ConsolidadoPersonalDAOImpl" id="consolidadoPersonalDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.DepartamentoDAOImpl" id="departamentoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.MunicipioDAOImpl" id="municipioDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.PaisDAOImpl" id="paisDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.ConsultarIngresoSoatDAOImpl" id="consultarIngresoSoatDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.inventario.InformesDespachoPacienteDAOImpl" id="informesDespachoPacienteDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.inventario.ConsolidadoSalidasDAOImpl" id="consolidadoSalidasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.inventario.ConsolidadoEntradasDAOImpl" id="consolidadoEntradasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.InformacionConveniosDAOImpl" id="informacionConveniosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoRiesgoComplicacionDAOImpl" id="tipoRiesgoComplicacionDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.Generico1Combo1CheckDAOImpl" id="generico1Combo1CheckDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoConsentimientoDAOImpl" id="tipoConsentimientoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.ConsentimientoInformadoDAOImpl" id="consentimientoInformadoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.salud_ocupacional.GeneralDAOImpl" id="generalDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.Generico2Text1CheckDAOImpl" id="generico2Text1CheckDAO"> 
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.activos.InformesActivosDAOImpl" id="informesActivosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.MedicamentosxFormulaDAOImpl" id="medicamentosxFormulaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.auditoria_medica.AuditoriaMedicaDAOImpl" id="auditoriaMedicaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoSeguimientoDAOImpl" id="tipoSeguimientoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoDocumentoClasificacionDAOImpl" id="tipoDocumentoClasificacionDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.pyp.AgendaVacunacionDAOImpl" id="agendaVacunacionDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.inventario.InventarioGeneralDAOImpl" id="inventarioGeneralDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.ListaOrdenesInternasDAOImpl" id="listaOrdenesInternasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.laboratorio.RecepcionStikerDAOImpl" id="recepcionStikerDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.AtencionImagenesDAOImpl" id="atencionImagenesDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.ConceptoAgrupacionCgrDAOImpl" id="conceptoAgrupacionCgrDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.rrhh.InformeCgrDAOImpl" id="informeCgrDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.contabilidad.LibroDiarioDAOImpl" id="libroDiarioDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.FichaNotificacionSivigilaDAOImpl" id="fichaNotificacionSivigilaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.FonoaudiologiaDAOImpl" id="fonoaudiologiaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.citas.CitasDAOImpl" id="citasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.InformeMorbilidadIraDAOImpl" id="informeMorbilidadIraDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.InformeMorbilidadEDADAOImpl1" id="informeMorbilidadEDADAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.rrhh.ConsultarNominaxFechaDAOImpl" id="consultarNominaxFechaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.AntecedenteReumatologicoDAOImpl" id="antecedenteReumatologicoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.TamizajeEsteticoDAOImpl" id="tamizajeEsteticoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.AlertasGeneralesDAOImpl" id="alertasGeneralesDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.auditoria_medica.CierreSeguimientoDAOImpl" id="cierreSeguimentoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.PsicomotrizDAOImpl" id="psicomotrizDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.DepresionPospartoDAOImpl" id="depresionPospartoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.MaltratoViolenciaDAOImpl" id="maltratoViolenciaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.ClasificacionNotasDAOImpl" id="clasificacionNotasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.ClasificacionEularDAOImpl" id="xClasificacionEular">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.CuestionadioHaqDAOImpl" id="xCuestionarioHaq">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.AntecedentesGinecobstetricosDAOImpl" id="antecedentesGinecoobstetricoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.IngresoOrdenSalidaDAOImpl" id="ingresoOrdenSalidaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.general.H_GrupoSistemasDAOImpl" id="GrupoSistemasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.H_TipoSistemasDAOImpl" id="TipoSistemasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.GrupoExamenFisicoDAOImpl" id="GrupoExamenFisicoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.GConsultasSqlDAOImpl" id="GConsultasSqlDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.laboratorio.ProtocolosxEquiposDAOImpl" id="ProtocolosxEquiposDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.EntornoFamiliarDAOImpl" id="EntornoFamiliarDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+   
+    <bean class="com.genoma.plus.dao.impl.historia.FamiliogramaDetalleDAOImpl" id="FDetalleDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.FamiliogramaEncabezadoDAOImpl" id="FEncabezadoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.RelacionesFamiliaresDAOImpl" id="RFamiliaresDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.CuestionarioDAOImpl" id="cuestionarioDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.CuestionarioDetalleDAOImpl" id="cuestionarioDetalleDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.CuestionarioDetalleSubCategoriaDAOImpl" id="cuestionarioDetalleSubCategoriaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.Atencion_Informacion_N10_DAOImpl" id="Atencion_Informacion_N10_DAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.FamiliogramaEntornoDAOImpl" id="FamiliogramaEDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.general.DetalleContenidoHCDAOImpl" id="DetalleContenidoHCDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.ExamenFisicoCyD_DAOImpl" id="examenFisicoCyD_DAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+   
+    <bean class="com.genoma.plus.dao.impl.gestiondoc.AtencionManualesDAOImpl" id="AtencionesManualesDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.FamiliogramaDetalleRelacionDAOImpl" id="FDetalleRelacionesDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.salud_ocupacional.SOTipoSegmentoDAOImpl" id="xTipoSegmentoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.contabilidad.TipodeInformesDAOImpl" id="xTipodeInformeDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.contabilidad.PucTipoDeInformeDAOImpl" id="PucTipodeInformeDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.historia.TipoHistoriaDAOImpl" id="TipoHistoriaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.presupuesto.EntidadesContraloriaDAOImpl" id="EntidadesContraloriaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+   
+    <bean class="com.genoma.plus.dao.impl.presupuesto.FinalidadGastoDAOImpl" id="FinalidadGastoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.presupuesto.OrigenIngresoDAOImpl" id="OrigenIngresoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.presupuesto.ParametrizacionCGRDAOImpl" id="ParametrizacionCGRDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.presupuesto.RubrosContraloriaDAOImpl" id="RubrosContraloriaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.presupuesto.TipoDestinacionDAOImpl" id="TipoDestinacionDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.presupuesto.TipoRecursosDAOImpl" id="TipoRecursosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.presupuesto.TipoSituacionDAOImpl" id="TipoSituacionDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.presupuesto.TipoVigenciaDAOImpl" id="TipoVigenciaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.laboratorio.ProtocolosDAOImpl" id="protocolosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.laboratorio.InformesLaboratorioDAOImpl" id="informesLaboratorioDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.PyP_EAD_DAOImpl" id="pypEAD_DAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+       
+    <bean class="com.genoma.plus.dao.impl.historia.EscalaAbreviadadeDesarrolloDAOImpl" id="EscalaAbreviadadeDesarrolloDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.enfermeria.ConteoUnidosisAgrupadasUregenciaDAOImpl" id="conteoUnidosisAgrupadasUregenciaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.ConfiguracionItemsDAOImpl" id="configuracionItemsDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>  
+    
+    <bean class="com.genoma.plus.dao.impl.inventario.ClasificacionLasaDAOImpl" id="ClasificacionLasaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.UnidadMedidaDAOImpl" id="unidadMedidaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.ConfiguracionItemsxTipoHistoriaDAOImpl" id="configuracionItemsxTipoHistoriaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.genoma.plus.dao.impl.historia.AntecedentesFisicoPsiquiatricosDAOImpl" id="antecedentesPsiquiatricosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>  
+    
+    <bean class="com.genoma.plus.dao.impl.general.TipoAntecedentesPsiquiatricosDAOImpl" id="tipoAntecedentesPsiquiatricosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.OrdenAnexo3DAOImpl" id="ordenAnexo3DAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+     
+    <bean class="com.genoma.plus.dao.impl.sig.InformeGeneralesDAOImpl" id="informeGeneralesPyPDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+        
+    <bean class="com.genoma.plus.dao.impl.facturacion.TipoAtencionDAOImpl" id="tipoAtencionDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.parametrizacion.ProcedimientoPorCentroDeCostoDAOImpl" id="procedimientoPorCentroDeCostoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>  
+    
+    <bean class="com.genoma.plus.dao.impl.facturacion.UnidadCamaDAOImpl" id="unidadCamaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.GlasgowDAOImpl" id="glasgowDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.enfermeria.HojaTratamientoDAOImpl" id="hojaTratamientoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.parametrizacion.ConsultorioDAOImpl" id="consultorioDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean class="com.genoma.plus.dao.impl.sig.InformeAnexosDAOImpl" id="informeAnexosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.sig.InformeCitasAtendidasDAOImpl" id="informeCitasAtendidasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.sig.InformeInterconsultasDAOImpl" id="informeInterconsultasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+
+    <bean class="com.genoma.plus.dao.impl.facturacion.EventoECastPacienteDAOImpl" id="eventoCastPacienteDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.EvaluacionRecienNacidoDAOImpl" id="evaluacionRecienNacidoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.general.ClapDAOImpl" id="clapDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.ListaDeChequeoDAOImpl" id="listaDeChequeoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.ValePreguntasDAOImpl" id="ValePreguntasDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.ValeCondicionesEstructuralesDAOImpl" id="ValeCodicionesEstructuralesDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.ValeRiesgosGeneralesDAOImpl" id="valeRiesgosGenerales">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.ValeReportePadresDetalleDAOImpl" id="valeReportePadresDetalle">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.historia.ValeReportePadresEncabezadoDAOImpl" id="valeReportePadresEncabezado">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.parametrizacion.ImportarInformacionPaiWebDAOimpl" id="importarInformacionPaiWebDAOimpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.laboratorio.HomologacionItemsExternosDAOImpl" id="homologacionItemsExternosDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.SGC_Informe015OportunidadAtencionDAOImpl" id="sGC_Informe015OportunidadAtencioDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.InformeMedicamentosSivigilaDAOImpl" id="informeMedicamentosSivigilaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.gcuenta.InformesCartera2193DAOImpl" id="informesCartera2193DAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sig.ReportesProduccionPorSedeDA0Impl" id="reportesCamu633DA0Impl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.SC_EstaditicadeConsultaDAOImpl" id="sC_EstaditicadeConsultaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.ConsultaSIMEDTrimestralDAOImpl" id="consultaSIMEDTrimestralDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>   
+      
+    <bean class="com.genoma.plus.dao.impl.sgc.Planificacion_Familias_AIC_clinica_pajonalDAOImpl" id="planificacion_Familias_AIC_clinica_pajonalDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.ConsultarInformacionGenericaHospitalizacionDAOImpl" id="consultarInformacionGenericaHospitalizacionDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.general.ReporteTipoHCDAOImpl" id="reporteTipoHCDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.InformePacientesFacturadosConFinalidadDAOImpl" id="informePacientesFacturadosConFinalidadDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.rrhh.ContratosPorEmpleadoDAOImpl" id="contratosPorEmpleadoDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean> 
+    
+    <bean class="com.genoma.plus.dao.impl.citas.CarneCitasDAOImpl" id="carneCitasDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>  
+    
+    <bean class="com.genoma.plus.dao.impl.parametrizacion.EspecialidadDAOImpl" id="especialidadDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>  
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.MedicamentosEntregadosPorEPSDAOImpl" id="medicamentosEntregadosPorEPSDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.salud_ocupacional.Reporte_de_seguimientoDAOImpl" id="reporte_de_seguimientoDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.laboratorio.ProtocoloProcedimientoEmpresaDAOImpl" id="protocoloProcedimientoEmpresaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.sgc.EjecucionPresupuestalPorFechaDAOImpl" id="ejecucionPresupuestalPorFechaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.inventario.InformeSalidasDAOImpl" id="informeSalidasDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.gcuenta.ConsolidadoDePagosDAOImpl" id="consolidadoDePagosDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.parametrizacion.AuditorPorEmpresaDAOImpl" id="auditorPorEmpresaDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.parametrizacion.listadosubgrupofacturaDAOImpl" id="listadosubgrupofacturaDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean class="com.genoma.plus.dao.impl.parametrizacion.EmpresaServicioDAOImpl" id="empresaServicioDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <bean class="com.genoma.plus.dao.impl.salud_ocupacional.ControlRemisionesDAOImpl" id="ControlRemisionesServicioDAO">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>
+    
+
