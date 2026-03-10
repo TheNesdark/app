@@ -1,6 +1,5 @@
 package Acceso;
 
-import Utilidades.Creguard_XML;
 import Utilidades.Validationerror;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -10,11 +9,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -22,7 +26,6 @@ import javax.swing.LayoutStyle;
 
 /* JADX INFO: loaded from: GenomaP.jar:Acceso/VentanaConfig.class */
 public class VentanaConfig extends JDialog {
-    Creguard_XML guar = new Creguard_XML();
     Validationerror valid = new Validationerror();
     private JButton Acept;
     private JTextField BaseDatos;
@@ -172,6 +175,30 @@ public class VentanaConfig extends JDialog {
 
     /* JADX INFO: Access modifiers changed from: private */
     public void AceptActionPerformed(ActionEvent evt) {
+        String baseDatos = this.BaseDatos.getText().trim();
+        String ip = this.IP1.getText().trim() + "." + this.IP2.getText().trim() + "." + this.IP3.getText().trim() + "." + this.IP4.getText().trim();
+        String user = this.User.getText().trim();
+        String pass = new String(this.Passw.getPassword()).trim();
+        if (baseDatos.isEmpty() || user.isEmpty() || pass.isEmpty() || this.IP1.getText().trim().isEmpty() || this.IP2.getText().trim().isEmpty() || this.IP3.getText().trim().isEmpty() || this.IP4.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe diligenciar todos los campos", "Validación", 1);
+            return;
+        }
+        Properties properties = new Properties();
+        properties.setProperty("jdbc.url", "jdbc:mariadb://" + ip + ":3306/" + baseDatos);
+        properties.setProperty("jdbc.username", user);
+        properties.setProperty("jdbc.password", pass);
+        properties.setProperty("jdbc.driver", "org.mariadb.jdbc.Driver");
+        File dir = new File("config");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File output = new File(dir, "jdbc.properties");
+        try (FileOutputStream fos = new FileOutputStream(output)) {
+            properties.store(fos, "Configuración de conexión Genoma");
+            JOptionPane.showMessageDialog(this, "Archivo generado en: " + output.getAbsolutePath(), "Éxito", 1);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "No fue posible guardar la configuración: " + e.getMessage(), "Error", 0);
+        }
     }
 
     /* JADX INFO: Access modifiers changed from: private */
@@ -230,5 +257,9 @@ public class VentanaConfig extends JDialog {
     }
 
     public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(() -> {
+            VentanaConfig dialog = new VentanaConfig();
+            dialog.setVisible(true);
+        });
     }
 }
