@@ -3120,7 +3120,7 @@ public class Metodos {
     /* JADX WARN: Multi-variable type inference failed */
     /* JADX WARN: Type inference failed for: r0v1, types: [java.lang.String[], java.lang.String[][]] */
     public String[][] mArreglosBimestres(String[][] lista, JComboBox comb) {
-        ?? r0 = {new String[]{"ENERO - FEBRERO", "-01-01", "-02-29"}, new String[]{"MARZO - ABRIL", "-03-01", "-04-30"}, new String[]{"MAYO - JUNIO", "-05-01", "-06-30"}, new String[]{"JULIO - AGOSTO", "-07-01", "-08-31"}, new String[]{"SEPTIEMBRE - OCTUBRE", "-09-01", "-10-31"}, new String[]{"NOVIEMBRE - DICIEMBBRE", "-11-01", "-12-31"}};
+        String[][] r0 = {new String[]{"ENERO - FEBRERO", "-01-01", "-02-29"}, new String[]{"MARZO - ABRIL", "-03-01", "-04-30"}, new String[]{"MAYO - JUNIO", "-05-01", "-06-30"}, new String[]{"JULIO - AGOSTO", "-07-01", "-08-31"}, new String[]{"SEPTIEMBRE - OCTUBRE", "-09-01", "-10-31"}, new String[]{"NOVIEMBRE - DICIEMBBRE", "-11-01", "-12-31"}};
         Object[][] objArr = new String[r0.length][3];
         for (int x = 0; x < r0.length; x++) {
             objArr[x][0] = r0[x][0];
@@ -3134,7 +3134,7 @@ public class Metodos {
     /* JADX WARN: Multi-variable type inference failed */
     /* JADX WARN: Type inference failed for: r0v1, types: [java.lang.String[], java.lang.String[][]] */
     public String[][] mArreglosPAnual(String[][] lista, JComboBox comb) {
-        ?? r0 = {new String[]{"ENERO - DICIEMBRE", "-01-01", "-12-31"}};
+        String[][] r0 = {new String[]{"ENERO - DICIEMBRE", "-01-01", "-12-31"}};
         Object[][] objArr = new String[r0.length][3];
         for (int x = 0; x < r0.length; x++) {
             objArr[x][0] = r0[x][0];
