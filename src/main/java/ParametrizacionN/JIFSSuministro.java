@@ -25,11 +25,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,6 +45,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -55,6 +61,13 @@ import javax.swing.border.Border;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.DefaultTableModel;
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /* JADX INFO: loaded from: GenomaP.jar:ParametrizacionN/JIFSSuministro.class */
 public class JIFSSuministro extends JInternalFrame {
@@ -92,6 +105,7 @@ public class JIFSSuministro extends JInternalFrame {
     private JButton JBTViaAdministracion;
     private JButton JBTViaAdministracion1;
     private JButton JBTViaAdministracion2;
+    private JButton JBTImportarMasivo;
     private JComboBox JCBCategoria;
     private JComboBox JCBClaLasa;
     private JComboBox JCBClasificacion;
@@ -175,6 +189,7 @@ public class JIFSSuministro extends JInternalFrame {
     private int xmaterial = 1;
     private int xcobrable = 0;
     private String xurl = null;
+    private final JFileChooser fileChooserMedicamentos = new JFileChooser();
     private final ISuministroService suministroService = (ISuministroService) Principal.contexto.getBean(ISuministroService.class);
 
     public JIFSSuministro() {
@@ -258,6 +273,7 @@ public class JIFSSuministro extends JInternalFrame {
         this.JBTViaAdministracion1 = new JButton();
         this.JCH_ValoresDefecto = new JCheckBox();
         this.JBTViaAdministracion2 = new JButton();
+        this.JBTImportarMasivo = new JButton();
         this.jPanel1 = new JPanel();
         this.JPIDatosBusqueda = new JPanel();
         this.JTFNombreBusqueda = new JTextField();
@@ -811,10 +827,18 @@ public class JIFSSuministro extends JInternalFrame {
                 JIFSSuministro.this.JCHCosultarTActionPerformed(evt);
             }
         });
+        this.JBTImportarMasivo.setFont(new Font("Arial", 1, 12));
+        this.JBTImportarMasivo.setIcon(new ImageIcon(getClass().getResource("/Imagenes/Excel_Icono24x24.png")));
+        this.JBTImportarMasivo.setText("Importar masivo");
+        this.JBTImportarMasivo.addActionListener(new ActionListener() { // from class: ParametrizacionN.JIFSSuministro.55
+            public void actionPerformed(ActionEvent evt) {
+                JIFSSuministro.this.JBTImportarMasivoActionPerformed(evt);
+            }
+        });
         GroupLayout JPIDatosBusquedaLayout = new GroupLayout(this.JPIDatosBusqueda);
         this.JPIDatosBusqueda.setLayout(JPIDatosBusquedaLayout);
-        JPIDatosBusquedaLayout.setHorizontalGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, JPIDatosBusquedaLayout.createSequentialGroup().addContainerGap().addComponent(this.JTFNombreBusqueda, -2, 843, -2).addGap(18, 18, 18).addGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.JCHComienza).addGroup(JPIDatosBusquedaLayout.createSequentialGroup().addComponent(this.JCHContiene).addGap(18, 18, 18).addComponent(this.JCHCosultarT))).addContainerGap(-1, 32767)));
-        JPIDatosBusquedaLayout.setVerticalGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(JPIDatosBusquedaLayout.createSequentialGroup().addGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.JTFNombreBusqueda, -2, 50, -2).addGroup(JPIDatosBusquedaLayout.createSequentialGroup().addComponent(this.JCHComienza).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.JCHContiene).addComponent(this.JCHCosultarT)))).addContainerGap(-1, 32767)));
+        JPIDatosBusquedaLayout.setHorizontalGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING, JPIDatosBusquedaLayout.createSequentialGroup().addContainerGap().addComponent(this.JTFNombreBusqueda, -2, 700, -2).addGap(18, 18, 18).addGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(JPIDatosBusquedaLayout.createSequentialGroup().addComponent(this.JCHContiene).addGap(18, 18, 18).addComponent(this.JCHCosultarT)).addGroup(JPIDatosBusquedaLayout.createSequentialGroup().addComponent(this.JCHComienza).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 99, 32767).addComponent(this.JBTImportarMasivo))).addContainerGap()));
+        JPIDatosBusquedaLayout.setVerticalGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(JPIDatosBusquedaLayout.createSequentialGroup().addGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(this.JTFNombreBusqueda, -2, 50, -2).addGroup(JPIDatosBusquedaLayout.createSequentialGroup().addGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.JCHComienza).addComponent(this.JBTImportarMasivo, -2, 34, -2)).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED).addGroup(JPIDatosBusquedaLayout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(this.JCHContiene).addComponent(this.JCHCosultarT)))).addContainerGap(-1, 32767)));
         this.JSPDetalle.setBorder(BorderFactory.createTitledBorder((Border) null, "HISTORICO", 2, 0, new Font("Arial", 1, 14), new Color(0, 103, 0)));
         this.JTDetalle.setFont(new Font("Arial", 1, 12));
         this.JTDetalle.setModel(new DefaultTableModel((Object[][]) new Object[0], new String[0]));
@@ -917,6 +941,224 @@ public class JIFSSuministro extends JInternalFrame {
     /* JADX INFO: Access modifiers changed from: private */
     public void JCHContieneActionPerformed(ActionEvent evt) {
         this.xtipobusqueda = 1;
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public void JBTImportarMasivoActionPerformed(ActionEvent evt) {
+        this.fileChooserMedicamentos.showDialog((Component) null, "Importar Hoja");
+        File file = this.fileChooserMedicamentos.getSelectedFile();
+        if (file == null) {
+            return;
+        }
+        try {
+            int creados = importarMedicamentos(file);
+            JOptionPane.showInternalMessageDialog(this, "Importación finalizada. Registros creados: " + creados, "IMPORTACIÓN", 1, new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Imagenes/Information.png"))));
+            mCrearModeloDatos();
+        } catch (Exception ex) {
+            Logger.getLogger(JIFSSuministro.class.getName()).log(Level.SEVERE, (String) null, (Throwable) ex);
+            JOptionPane.showInternalMessageDialog(this, "No fue posible importar: " + ex.getMessage(), "ERROR", 0, new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Imagenes/Error.png"))));
+        }
+    }
+
+    private int importarMedicamentos(File file) throws IOException, BiffException {
+        if (file.getName().endsWith("xls")) {
+            return importarMedicamentosXls(file);
+        }
+        if (file.getName().endsWith("xlsx")) {
+            return importarMedicamentosXlsx(file);
+        }
+        throw new IOException("Formato no soportado. Use .xls o .xlsx");
+    }
+
+    private int importarMedicamentosXls(File file) throws IOException, BiffException {
+        int creados = 0;
+        Workbook workbook = Workbook.getWorkbook(file);
+        Sheet sheet = workbook.getSheet(0);
+        Map<String, Integer> headers = construirHeadersXls(sheet);
+        for (int row = 1; row < sheet.getRows(); row++) {
+            if (esFilaVaciaXls(sheet, row)) {
+                continue;
+            }
+            if (crearMedicamentoDesdeFila(mapearFilaXls(sheet, headers, row))) {
+                creados++;
+            }
+        }
+        workbook.close();
+        return creados;
+    }
+
+    private int importarMedicamentosXlsx(File file) throws IOException {
+        int creados = 0;
+        FileInputStream fis = new FileInputStream(file);
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook(fis);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> ite = sheet.rowIterator();
+            if (!ite.hasNext()) {
+                workbook.close();
+                return 0;
+            }
+            Map<String, Integer> headers = construirHeadersXlsx(ite.next());
+            while (ite.hasNext()) {
+                Row row = ite.next();
+                if (row == null || filaVaciaXlsx(row)) {
+                    continue;
+                }
+                if (crearMedicamentoDesdeFila(mapearFilaXlsx(row, headers))) {
+                    creados++;
+                }
+            }
+            workbook.close();
+        } finally {
+            fis.close();
+        }
+        return creados;
+    }
+
+    private boolean crearMedicamentoDesdeFila(Map<String, String> fila) {
+        try {
+            String codigoBarra = valorFila(fila, "codigo_barra", "codigobarra", "cod_barra");
+            String nombre = valorFila(fila, "nombre", "suministro", "medicamento");
+            if (codigoBarra.isEmpty() || nombre.isEmpty()) {
+                return false;
+            }
+            if (!this.xconsulta.ejecutarSQLIdNotError("SELECT Id FROM i_suministro WHERE CodBarraUnidad='" + esc(codigoBarra) + "' LIMIT 1").isEmpty()) {
+                return false;
+            }
+            int cantidadUnidad = intOrDefault(valorFila(fila, "cantidad_unidad", "cantidadunidad"), 1);
+            String codigoCum = valorFila(fila, "codigo_cum", "codigocum", "cum");
+            String codigoAtc = valorFila(fila, "codigo_atc", "codigoatc", "atc");
+            String codigoIum = valorFila(fila, "codigo_ium", "codigoium", "ium");
+            String invima = valorFila(fila, "invima", "registro_invima", "registroinvima");
+            String fechaInvima = valorFila(fila, "fecha_vencimiento_invima", "fechavinvima", "fecha_v_invima");
+            if (fechaInvima.isEmpty()) {
+                fechaInvima = this.xmetodos.formatoAMD.format(this.xmetodos.getFechaActual());
+            }
+            int idPrincipioActivo = resolverId("i_principioactivo", "Nbre", valorFila(fila, "principio_activo", "principioactivo"));
+            int idTipoMedicamento = resolverId("i_tipo_medicamento", "nombre", valorFila(fila, "tipo_medicamento", "tipomedicamento"));
+            int idUnidadMedida = resolverId("i_unidadmedida", "Nbre", valorFila(fila, "unidad_medida", "unidadmedida"));
+            int idUnidadMinima = resolverId("i_unidad_minima_dispensacion", "nombre", valorFila(fila, "unidad_minima_dispensacion", "unidadminimadispensacion"));
+            int idPFarmaceutica = resolverId("i_presentacionfarmaceutica", "Nbre", valorFila(fila, "presentacion_farmaceutica", "presentacionfarmaceutica"));
+            int idVia = resolverId("i_viaadministracion", "Nbre", valorFila(fila, "via_administracion", "viaadministracion"));
+            int idPComercial = resolverId("i_presentacioncomercial", "Nbre", valorFila(fila, "presentacion_comercial", "presentacioncomercial"));
+            int idConcentracion = resolverId("i_concentracion", "Nbre", valorFila(fila, "concentracion"));
+            int idClasificacion = resolverId("i_clasificacion", "Nbre", valorFila(fila, "clasificacion"));
+            int idLaboratorio = resolverId("i_laboratorio", "Nbre", valorFila(fila, "laboratorio"));
+            int idTipoProducto = resolverId("i_tipoproducto", "Nbre", valorFila(fila, "tipo_producto", "tipoproducto"));
+            int idCategoria = resolverId("i_categoria", "Nbre", valorFila(fila, "categoria"));
+            int idPrioridad = resolverId("i_prioridades", "Nbre", valorFila(fila, "prioridad"));
+            int idLasa = resolverId("i_clasif_lasa", "Nombre", valorFila(fila, "clasificacion_lasa", "lasa"));
+            int vutil = intOrDefault(valorFila(fila, "vida_util", "vutil"), 0);
+            String v2463 = valorFila(fila, "v2463");
+            String sql = "INSERT INTO i_suministro(CodBarraUnidad, CantidadUnidad, CodBarraEmbalaje, Nbre, CajaCompleta, IdPrincipioActivo, IdUnidadMedida, IdPresentacionFarmaceutica, IdViaAdministracion, IdPresentacionComercial, IdConcentracion, IdClasificacion, RegistroInvima, IdLaboratorio, IdTipoProducto, IdCategoria, IdPrioridad, Pos, EstaActivo, ActivoHc, EsMaterial, Escobrable, Iva, Indicaciones, ContraIndicaciones, Interacciones, ReaccionesAdversas, CodigoCUM, CodigoAtc, DLogo, VMP, ValorPLM, FechaVInvima, TMinima, TMaxima, MTemperatura, REntidad, Ctc_Justificacion, Ctc_EvidenciaC, Ctc_Casuistica, Ctc_Precauciones, Id_Cla_Lasa, VUtil, V2463, codigoIUM, Fecha, UsuarioS, idTipoMedicamento, idUnidadMInimaDispensacion) VALUES ('" + esc(codigoBarra) + "', '" + cantidadUnidad + "', '', '" + esc(nombre.toUpperCase()) + "', '0', '" + idPrincipioActivo + "', '" + idUnidadMedida + "', '" + idPFarmaceutica + "', '" + idVia + "', '" + idPComercial + "', '" + idConcentracion + "', '" + idClasificacion + "', '" + esc(invima) + "', '" + idLaboratorio + "', '" + idTipoProducto + "', '" + idCategoria + "', '" + idPrioridad + "', '0', '1', '0', '1', '0', '0', '', '', '', '', '" + esc(codigoCum) + "', '" + esc(codigoAtc) + "', '', '0', '0', '" + esc(fechaInvima) + "', '0', '0', '0', '0', '', '', '', '', '" + idLasa + "', '" + vutil + "', '" + esc(v2463) + "', '" + esc(codigoIum) + "', '" + this.xmetodos.formatoAMDH24.format(this.xmetodos.getFechaActual()) + "', '" + Principal.usuarioSistemaDTO.getLogin() + "', '" + idTipoMedicamento + "', '" + idUnidadMinima + "')";
+            this.xconsulta.ejecutarSQLNotError(sql);
+            return true;
+        } catch (Exception ex) {
+            Logger.getLogger(JIFSSuministro.class.getName()).log(Level.WARNING, "Fila no importada", (Throwable) ex);
+            return false;
+        }
+    }
+
+    private Map<String, Integer> construirHeadersXls(Sheet sheet) {
+        Map<String, Integer> headers = new HashMap<>();
+        for (int col = 0; col < sheet.getColumns(); col++) {
+            Cell header = sheet.getCell(col, 0);
+            headers.put(normalizarCabecera(header.getContents()), Integer.valueOf(col));
+        }
+        return headers;
+    }
+
+    private Map<String, Integer> construirHeadersXlsx(Row row) {
+        Map<String, Integer> headers = new HashMap<>();
+        short max = row.getLastCellNum();
+        for (int col = 0; col < max; col++) {
+            org.apache.poi.ss.usermodel.Cell cell = row.getCell(col);
+            if (cell != null) {
+                headers.put(normalizarCabecera(cell.toString()), Integer.valueOf(col));
+            }
+        }
+        return headers;
+    }
+
+    private Map<String, String> mapearFilaXls(Sheet sheet, Map<String, Integer> headers, int row) {
+        Map<String, String> fila = new HashMap<>();
+        headers.forEach((k, v) -> {
+            fila.put(k, sheet.getCell(v.intValue(), row).getContents().trim());
+        });
+        return fila;
+    }
+
+    private Map<String, String> mapearFilaXlsx(Row row, Map<String, Integer> headers) {
+        Map<String, String> fila = new HashMap<>();
+        headers.forEach((k, v) -> {
+            org.apache.poi.ss.usermodel.Cell cell = row.getCell(v.intValue());
+            fila.put(k, cell == null ? "" : cell.toString().trim());
+        });
+        return fila;
+    }
+
+    private boolean esFilaVaciaXls(Sheet sheet, int row) {
+        for (int col = 0; col < sheet.getColumns(); col++) {
+            if (!sheet.getCell(col, row).getContents().trim().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean filaVaciaXlsx(Row row) {
+        short max = row.getLastCellNum();
+        for (int col = 0; col < max; col++) {
+            org.apache.poi.ss.usermodel.Cell cell = row.getCell(col);
+            if (cell != null && !cell.toString().trim().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int resolverId(String tabla, String campo, String valor) {
+        if (valor == null || valor.trim().isEmpty()) {
+            throw new IllegalArgumentException("Campo requerido sin valor para " + tabla);
+        }
+        String limpio = valor.trim();
+        if (limpio.matches("\\d+")) {
+            return Integer.parseInt(limpio);
+        }
+        String id = this.xconsulta.ejecutarSQLIdNotError("SELECT Id FROM " + tabla + " WHERE UPPER(" + campo + ") = UPPER('" + esc(limpio) + "') LIMIT 1");
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("No existe en " + tabla + ": " + limpio);
+        }
+        return Integer.parseInt(id);
+    }
+
+    private String valorFila(Map<String, String> fila, String... claves) {
+        for (String key : claves) {
+            String value = fila.get(normalizarCabecera(key));
+            if (value != null && !value.trim().isEmpty()) {
+                return value.trim();
+            }
+        }
+        return "";
+    }
+
+    private String normalizarCabecera(String header) {
+        return header == null ? "" : header.toLowerCase().trim().replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u").replace(" ", "_");
+    }
+
+    private int intOrDefault(String valor, int defecto) {
+        if (valor == null || valor.trim().isEmpty()) {
+            return defecto;
+        }
+        try {
+            return Integer.parseInt(valor.split("\\.")[0].trim());
+        } catch (NumberFormatException e) {
+            return defecto;
+        }
+    }
+
+    private String esc(String valor) {
+        return valor == null ? "" : valor.replace("'", "''");
     }
 
     /* JADX INFO: Access modifiers changed from: private */
