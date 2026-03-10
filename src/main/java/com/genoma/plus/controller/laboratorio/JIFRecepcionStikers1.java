@@ -293,7 +293,7 @@ public class JIFRecepcionStikers1 extends JInternalFrame {
     /* JADX WARN: Multi-variable type inference failed */
     /* JADX WARN: Type inference failed for: r0v1, types: [java.lang.Object[][], java.lang.String[], java.lang.String[][]] */
     private void procesarVisualizacion() {
-        ?? r0 = {new String[]{"id", this.IdConcatenado + "-1"}, new String[]{"SUBREPORT_DIR", this.xmt.getSO() + this.xmt.getBarra() + "Reportes" + this.xmt.getBarra()}, new String[]{"SUBREPORTFIRMA_DIR", this.xmt.getSO() + this.xmt.getBarra() + "Firmas" + this.xmt.getBarra()}};
+        String[][] r0 = {new String[]{"id", this.IdConcatenado + "-1"}, new String[]{"SUBREPORT_DIR", this.xmt.getSO() + this.xmt.getBarra() + "Reportes" + this.xmt.getBarra()}, new String[]{"SUBREPORTFIRMA_DIR", this.xmt.getSO() + this.xmt.getBarra() + "Firmas" + this.xmt.getBarra()}};
         System.out.println(this.xmt.getRutaRep());
         if ("LABORATORIO CLINICO CENTRAL DE REFERENCIA S.A.S.".equals(Principal.informacionIps.getNombreIps())) {
             this.xmt.PresentacionImpresora("l_stiker_n_Historico_Fonnegra.jasper", r0);
